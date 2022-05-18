@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+.form{
+  min-height:400px;
+  padding:100px;
+  color:black;
+  font-weight:bold;
+  margin:auto;
+  max-width:50%;
+  background-image:linear-gradient(rgba(209, 241, 163, 0.8), rgba(165, 183, 235, 0.6));
+}
