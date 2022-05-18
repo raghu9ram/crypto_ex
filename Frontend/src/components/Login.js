@@ -22,11 +22,6 @@ const Login = (props) => {
       props.showAlert("login successfully", "success");
       //save the auth token and redirect back to
       localStorage.setItem("token", json.authtoken);
-      localStorage.setItem("_id", json?.user?._id);
-      localStorage.setItem(
-        "favourites",
-        JSON.stringify(json?.user?.favourites)
-      );
       navigate("/");
     } else {
       props.showAlert("invalid credentials", "danger");

@@ -57,6 +57,12 @@ const Headermenu = () => {
               Crypto
             </Link>
             <Link
+              to={"/exchange"}
+              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+            >
+              Exchange
+            </Link>
+            <Link
               to={"/stocks"}
               className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
             >

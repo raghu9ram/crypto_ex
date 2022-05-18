@@ -1,7 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
-import {UseNavigate} from'react-router-dom'
 import {
   Container,
   LinearProgress,
@@ -9,34 +8,39 @@ import {
   Typography,
   TableContainer,
   Paper,
+  TablePagination,
 } from "@material-ui/core";
 
 import { useNavigate  } from "react-router-dom";
-import { Autocomplete } from '@material-ui/lab';
-import SearchComponent from './SearchComponent';
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-const Homepage = () => {
+const ExchangePage = () => {
   const navigate= useNavigate();
 
-  const [stocks, setStocks] = useState([]);
+  const [exchanges, setExchanges] = useState([]);
   const [loading, setLoading] = useState(false);
-  const getData = (coins=[]) => {
+  const [pagination, setPagination] = useState(null);
+  const getData = (pageNumber, perPage=25) => {
     if(localStorage.getItem('token')){
-      setLoading(true)
-       axios.get( `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=100&page=1&sparkline=false&ids=${coins.join(',')}`)
-       .then(result => {
-           setStocks(result.data)
-       })
-       setLoading(false)}
-       else{
-         navigate('/Login')
-       }
+        setLoading(true)
+         axios.get( `https://api.coingecko.com/api/v3/exchanges?page=${pageNumber}&per_page=${perPage}`)
+         .then(result => {
+             setExchanges(result.data);
+             setPagination({
+                 count: Number(result.headers['total']),
+                 rowsPerPage: Number(result.headers['per-page']),
+                 page:pageNumber
+            });
+         })
+         setLoading(false)}
+         else{
+           navigate('/Login')
+         }
   }
      useEffect(() => {
-      getData();
-    },[]);
+      getData(1);
+    },[])
     const useStyles = makeStyles({
       row: {
         backgroundColor: "#ffffff",
@@ -63,14 +67,8 @@ const Homepage = () => {
           variant="h4"
           style={{ margin: 18, fontFamily: "Montserrat" }}
         >
-          Cryptocurrency Prices by Market Cap
+          Cryptocurrency Exchanges
         </Typography>
-
-        <SearchComponent
-          url="https://api.coingecko.com/api/v3/search?query="
-          dataString="coins"
-          onSelection={(values) => getData(values.map((ele)=> ele.id))}
-        ></SearchComponent>
       
         <TableContainer component={Paper}>
           {loading ? (
@@ -93,43 +91,58 @@ const Homepage = () => {
                    scope="col"
                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                  >
-                   Price
+                   Website
                  </th>
                  <th
                    scope="col"
                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                  >
-                   Change in 24 hr
+                   Country
+                 </th>
+                 <th
+                   scope="col"
+                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                 >
+                   Description
+                 </th>
+                 <th
+                   scope="col"
+                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                 >
+                   Trust Rank
                  </th>
                  
                  
                </tr>
              </thead>
              <tbody className="bg-white divide-y divide-gray-200">
-               {stocks?.map((stock) => (
+               {exchanges?.map((exchange) => (
                  <tr 
-                 onClick={() => navigate(`/coins/${stock.id}`)}
+                 onClick={() => navigate(`#`)}
                  className={classes.row}
-                 key={stock.name}>
+                 key={exchange.name}>
                    <td className="px-6 py-4 whitespace-nowrap">
                      <div className="flex items-center">
                        <div className="flex-shrink-0 h-10 w-10">
-                         <img className="h-10 w-10 rounded-full" src={stock.image} alt="" />
+                         <img className="h-10 w-10 rounded-full" src={exchange.image} alt="" />
                        </div>
                        <div className="ml-4">
-                         <div className="text-sm font-medium text-gray-900">{stock.name}</div>
+                         <div className="text-sm font-medium text-gray-900">{exchange.name}</div>
                        </div>
                      </div>
                    </td>
-                   <td className="px-6 py-4 whitespace-nowrap">
-                     <div className="text-sm text-gray-900">$ {stock.current_price}</div>
+                   <td className="px-6 py-4 text-left whitespace-nowrap">
+                     <a href={exchange.url} target="_blank" rel="noreferrer">{exchange.url}</a>
                    </td>
-                   <td className="px-6 py-4 whitespace-nowrap">
-                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                       {stock.price_change_percentage_24h} %
-                     </span>
+                   <td className="px-6 py-4 text-left whitespace-nowrap">
+                     {exchange.country}
                    </td>
-                   
+                   <td className="px-6 py-4 text-left">
+                     {exchange.description}
+                   </td>
+                   <td className="px-6 py-4 text-left">
+                    {exchange.trust_score_rank}
+                   </td>
                  </tr>
                ))}
              </tbody>
@@ -141,6 +154,19 @@ const Homepage = () => {
           )}
         </TableContainer>
 
+        {pagination && <TablePagination
+            component={Paper}
+            count={pagination.count}
+            page={pagination.page-1}
+            rowsPerPage={pagination.rowsPerPage}
+            onPageChange={(e, page) => {
+                getData(page+1);
+            }}
+            onRowsPerPageChange={(e) => {
+                getData(pagination.page, e.target.value)
+            }}
+        ></TablePagination>}
+
         {/* Comes from @material-ui/lab */}
         
       </Container>
@@ -148,4 +174,4 @@ const Homepage = () => {
     );
 }
 
-export default Homepage;
+export default ExchangePage;

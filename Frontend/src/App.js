@@ -13,6 +13,7 @@ import React, { useState } from 'react';
 import Alert from './components/Alert'
 
 import './App.css';
+import ExchangePage from './components/ExchangePage';
 
 const useStyles = makeStyles(() => ({
   App: {
@@ -48,6 +49,7 @@ const showAlert = (message, type)=>{
           <Route path="/news" element={<News />} exact />
           <Route path="/stocks" element={<Stocks />} exact />
           <Route path="/crypto" element={<Homepage />} exact />
+          <Route path="/exchange" element={<ExchangePage />} exact />
           <Route path="/Login" element={<Login showAlert={showAlert} />} exact />
           <Route path="/Signup" element={<Signup showAlert={showAlert} />} exact />
 

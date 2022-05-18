@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +25,6 @@ function Signup(props) {
       props.showAlert("account created successfully", "success");
       //save the auth token and redirect back to
       localStorage.setItem("token", json.authtoken);
-      localStorage.setItem("_id", json?.user?._id);
       navigate("/");
     } else {
       props.showAlert("email already exist", "danger");
@@ -34,6 +34,7 @@ function Signup(props) {
     name: "",
     email: "",
     password: "",
+   
   });
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -41,10 +42,9 @@ function Signup(props) {
   return (
     <>
       <div>
-        <div className="mt-2 text-center">
-          <h2 className="my-4">Please signup to use our Services</h2>
-        </div>
-        <form className="form" onSubmit={handleSubmit}>
+      <div className="mt-2 text-center">
+        <h2 className="my-4">Please signup to use our Services</h2></div>
+        <form  className="form" onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
               Name
@@ -88,6 +88,7 @@ function Signup(props) {
               required
             />
           </div>
+          
 
           <button type="submit" className="btn btn-success ">
             Sign up
