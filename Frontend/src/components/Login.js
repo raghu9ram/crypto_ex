@@ -33,7 +33,7 @@ const Login = (props) => {
   };
   return (
     <>
-      <div className="my-2 text-center">
+      <div className="my-3 text-center">
         <h2>Please login to use Our Services</h2>
       </div>
       <div>

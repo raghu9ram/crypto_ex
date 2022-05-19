@@ -18,6 +18,7 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    favourites: [{ type: String }],
   });
 
   const User = mongoose.model('user', UserSchema);

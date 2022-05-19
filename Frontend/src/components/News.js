@@ -36,7 +36,6 @@ export default function News() {
     >
       <div className="flex justify-between mb-16 max-w-7xl mx-auto">
         <h1 className="text-2xl">Latest Crypto News</h1>
-        <a>Show more</a>
       </div>
 
       {isFetching && (

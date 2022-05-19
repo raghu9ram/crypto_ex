@@ -1,7 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
-import {UseNavigate} from'react-router-dom'
+import {UseNavigate} from'react-router-dom';
+import ReactPaginate from "react-paginate";
 import {
   Container,
   LinearProgress,
@@ -17,11 +18,19 @@ import SearchComponent from './SearchComponent';
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+const cryptoPerPage = 10;
 const Homepage = () => {
   const navigate= useNavigate();
 
   const [stocks, setStocks] = useState([]);
+  const [favourites, setFavourites] = useState(
+    JSON.parse(localStorage.getItem("favourites")) ?? []
+  );
   const [loading, setLoading] = useState(false);
+
+  const [initialCrypto, setInitialCrypto] = useState(0);
+  const [lastCrypto, setLastCrypto] = useState(10);
+  console.log(stocks);
   const getData = (coins=[]) => {
     if(localStorage.getItem('token')){
       setLoading(true)
@@ -37,6 +46,21 @@ const Homepage = () => {
      useEffect(() => {
       getData();
     },[]);
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setLoading(true);
+      axios
+        .get(
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=100&page=1&sparkline=false`
+        )
+        .then((result) => {
+          setStocks(result.data);
+        });
+      setLoading(false);
+    } else {
+      navigate("/Login");
+    }
+  }, []);
     const useStyles = makeStyles({
       row: {
         backgroundColor: "#ffffff",
@@ -52,7 +76,28 @@ const Homepage = () => {
         },
       },
     });
-    
+    const handleSubmit = async (e) => {
+      if (favourites.includes(e)) {
+        var fav = favourites.filter((d) => d !== e).map((d) => d);
+      } else {
+        fav = [...favourites, e];
+      }
+      const response = await fetch("http://localhost:5000/api/auth/update", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: localStorage.getItem("_id"),
+          favourites: fav,
+        }),
+      });
+      const json = await response.json();
+      setFavourites(json.favourites);
+      console.log(json);
+      localStorage.setItem("favourites", JSON.stringify(json?.favourites));
+    };
+  
     
     const classes = useStyles();
     
@@ -71,7 +116,7 @@ const Homepage = () => {
           dataString="coins"
           onSelection={(values) => getData(values.map((ele)=> ele.id))}
         ></SearchComponent>
-      
+
         <TableContainer component={Paper}>
           {loading ? (
             <LinearProgress style={{ backgroundColor: "gold" }} />
@@ -129,13 +174,62 @@ const Homepage = () => {
                        {stock.price_change_percentage_24h} %
                      </span>
                    </td>
-                   
+                   <td
+                            className="px-6 py-4 whitespace-nowrap"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSubmit(stock.id);
+                            }}
+                            style={{ zIndex: "0" }}
+                          >
+                            <div className="text-sm text-gray-900">
+                              {favourites.includes(stock?.id) ? (
+                                <img
+                                  src={require("../assets/icons/filled-star.png")}
+                                  alt=""
+                                  style={{ height: "25px", width: "25px" }}
+                                />
+                              ) : (
+                                <img
+                                  src={require("../assets/icons/unfilled-star.png")}
+                                  alt=""
+                                  style={{ height: "25px", width: "25px" }}
+                                />
+                              )}
+                            </div>
+                          </td>
                  </tr>
                ))}
              </tbody>
            </table>
          </div>
        </div>
+       <div style={{ padding: "2rem" }}> 
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel="Next"
+                onPageChange={(e) => {
+                  setInitialCrypto(lastCrypto + 1);
+                  setLastCrypto(lastCrypto + 10);
+                }}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                pageCount={stocks.length / 10}
+                initialPage={0}
+                previousLabel="Previous"
+                containerClassName={"pagination justify-content-center"}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active"}
+                style={{ margin: 18}}
+              />
+              </div>
      </div>
    
           )}

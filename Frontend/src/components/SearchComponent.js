@@ -47,7 +47,7 @@ export default function SearchComponent(props) {
         <TextField
           {...params}
           label="Search Cryptos"
-          variant="outlined"
+          variant="filled"
           onChange={(ev) => {
             // dont fire API if the user delete or not entered anything
             if (ev.target.value !== "" || ev.target.value !== null) {
