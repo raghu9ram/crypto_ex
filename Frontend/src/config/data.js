@@ -16,3 +16,26 @@ export const chartDays = [
     value: 365,
   },
 ];
+
+export const stockDays = [
+  {
+    label: "24 Hours",
+    granularity: "TIME_SERIES_INTRADAY",
+    resKey: "Time Series (5min)"
+  },
+  {
+    label: "Daily",
+    granularity: "TIME_SERIES_DAILY",
+    resKey: "Time Series (Daily)"
+  },
+  {
+    label: "Weekly",
+    granularity: "TIME_SERIES_WEEKLY",
+    resKey: "Weekly Time Series"
+  },
+  {
+    label: "Monthly",
+    granularity: "TIME_SERIES_MONTHLY",
+    resKey: "Monthly Time Series"
+  },
+];

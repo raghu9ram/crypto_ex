@@ -18,7 +18,8 @@ const Headermenu = () => {
   };
   return (
     <>
-      <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+      <nav className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
+      <div className="container flex flex-wrap justify-between items-center mx-auto">
         <Link to={'/'}>
           <div className="flex items-center flex-shrink-0 text-white mr-6">
             <svg
@@ -31,13 +32,13 @@ const Headermenu = () => {
               <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
             </svg>
             <span className="font-semibold text-xl tracking-tight">
-              Stock Ex
+              Crypto Ex
             </span>
           </div>
         </Link>
         {localStorage.getItem("token") ? (<>
         <div className="block lg:hidden">
-          <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+          <button className=" flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
             <svg
               className="fill-current h-3 w-3"
               viewBox="0 0 20 20"
@@ -52,25 +53,25 @@ const Headermenu = () => {
           <div className="text-sm lg:flex-grow">
             <Link
               to={"/crypto"}
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              className="block mt-4 lg:inline-block md:hover:text-blue-700 lg:mt-0 text-teal-200 hover:text-white mr-4"
             >
               Crypto
             </Link>
             <Link
               to={"/exchange"}
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              className="block mt-4 lg:inline-block md:hover:text-blue-700 lg:mt-0 text-teal-200 hover:text-white mr-4"
             >
               Exchange
             </Link>
             <Link
               to={"/stocks"}
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              className="block mt-4 lg:inline-block md:hover:text-blue-700 lg:mt-0 text-teal-200 hover:text-white mr-4"
             >
               Stocks
             </Link>
             <Link
               to={"/news"}
-              className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
+              className="block mt-4 lg:inline-block dark:border-gray-700 md:hover:text-blue-700 lg:mt-0 text-teal-200 hover:text-white"
             >
               News
             </Link>
@@ -105,7 +106,7 @@ const Headermenu = () => {
               SIGNUP
             </Link></>)}
            
-        
+        </div>
       </nav>
     </>)
   

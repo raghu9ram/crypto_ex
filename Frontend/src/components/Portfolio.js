@@ -13,8 +13,10 @@ import {
 import {
   TwitterIcon,
   TwitterShareButton,
-  EmailShareButton,
-  EmailIcon,
+  WhatsappIcon,
+  WhatsappShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
 } from "react-share";
 
 import { useNavigate } from "react-router-dom";
@@ -148,31 +150,41 @@ export default function Portfolio() {
                                 </div>
                                 <div className="ml-4">
                                   <div className="text-sm font-medium text-gray-900">
-                                    <EmailShareButton
-                                      subject={"coin"}
-                                      body={"coin"}
-                                      disabled={false}
-                                      separator
-                                      url="www.google.com"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      <EmailIcon size={32} round />
-                                    </EmailShareButton>
+                                  
                                     <TwitterShareButton
-                                      title={"test"}
-                                      url={"www.google.com"}
+                                      title={"Here is My favorite stock"}
+                                      url={window.location.href}
+                                      quote={stock.name}
                                       style={{ paddingLeft: "5px" }}
                                       onClick={(e) => e.stopPropagation()}
                                     >
                                       <TwitterIcon size={32} round />
                                     </TwitterShareButton>
+                                    <WhatsappShareButton
+                                      title={"Here is My favorite stock"}
+                                      url={window.location.href}
+                                      quote={stock.name}
+                                      style={{ paddingLeft: "5px" }}
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <WhatsappIcon size={32} round />
+                                    </WhatsappShareButton>
+                                    <LinkedinShareButton
+                                      title={"Here is My favorite stock"}
+                                      url={window.location.href}
+                                      quote={stock.name}
+                                      style={{ paddingLeft: "5px" }}
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <LinkedinIcon size={32} round />
+                                    </LinkedinShareButton>
                                   </div>
                                 </div>
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="text-sm text-gray-900">
-                                $ {stock.current_price}
+                                £ {stock.current_price}
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">

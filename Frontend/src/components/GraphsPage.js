@@ -8,6 +8,14 @@ import { LinearProgress, makeStyles, Typography, CircularProgress,
 import SelectButton from "./SelectButton";
 
 import { chartDays } from "../config/data";
+import {
+  TwitterIcon,
+  TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+} from "react-share";
 import { Chart as ChartJS, registerables } from 'chart.js';
 import { Chart , Line} from 'react-chartjs-2'
 ChartJS.register(...registerables);
@@ -129,6 +137,38 @@ const classes = useStyles()
         <Typography variant="subtitle1" className={classes.description}>
         {ReactHtmlParser(stock?.description.en.split(". ")[0])}. 
         </Typography>
+        <div className="ml-4">
+                                  <div className="text-sm font-medium text-gray-900">
+                                  
+                                    <TwitterShareButton
+                                      title={"Here is My favorite stock"}
+                                      url={window.location.href}
+                                      quote={stock?.name}
+                                      style={{ paddingLeft: "5px" }}
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <TwitterIcon size={32} round />
+                                    </TwitterShareButton>
+                                    <WhatsappShareButton
+                                      title={`Here is My favorite stock ${stock?.name}`}
+                                      url={window.location.href}
+                                      quote={stock?.name}
+                                      style={{ paddingLeft: "5px" }}
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <WhatsappIcon size={32} round />
+                                    </WhatsappShareButton>
+                                    <LinkedinShareButton
+                                      title={"Here is My favorite stock"}
+                                      url={window.location.href}
+                                      quote={stock?.name}
+                                      style={{ paddingLeft: "5px" }}
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <LinkedinIcon size={32} round />
+                                    </LinkedinShareButton>
+                                  </div>
+                                </div>
        
         </div>
         

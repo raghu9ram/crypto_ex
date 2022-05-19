@@ -29,7 +29,7 @@ export default function SearchComponent(props) {
       id="asynchronous"
       style={{ backgroundColor: "#fff" }}
       open={open}
-      multiple={true}
+      multiple={props.multiple}
       onOpen={() => {
         setOpen(true);
       }}
@@ -39,14 +39,14 @@ export default function SearchComponent(props) {
       onChange={(ev,value)=> {
           props.onSelection(value);
       }}
-      getOptionSelected={(option, value) => option.name === value.name}
-      getOptionLabel={option => option.name}
+      getOptionSelected={(option, value) => option[props.labelKey] === value[props.labelKey]}
+      getOptionLabel={option => option[props.labelKey]}
       options={options}
       loading={loading}
       renderInput={params => (
         <TextField
           {...params}
-          label="Search Cryptos"
+          label={props.label}
           variant="filled"
           onChange={(ev) => {
             // dont fire API if the user delete or not entered anything

@@ -28,13 +28,11 @@ const Homepage = () => {
   );
   const [loading, setLoading] = useState(false);
 
-  const [initialCrypto, setInitialCrypto] = useState(0);
-  const [lastCrypto, setLastCrypto] = useState(10);
-  console.log(stocks);
-  const getData = (coins=[]) => {
+  const [pageNumber, setPageNumber] = useState(0);
+  const getData = (coins=[], page=0) => {
     if(localStorage.getItem('token')){
       setLoading(true)
-       axios.get( `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=100&page=1&sparkline=false&ids=${coins.join(',')}`)
+       axios.get( `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=5&page=${page+1}&sparkline=false&ids=${coins.join(',')}`)
        .then(result => {
            setStocks(result.data)
        })
@@ -51,7 +49,7 @@ const Homepage = () => {
       setLoading(true);
       axios
         .get(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=100&page=1&sparkline=false`
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=10&page=1&sparkline=false`
         )
         .then((result) => {
           setStocks(result.data);
@@ -114,9 +112,12 @@ const Homepage = () => {
         <SearchComponent
           url="https://api.coingecko.com/api/v3/search?query="
           dataString="coins"
+          multiple={true}
+          labelKey="name"
+          label="Search Cryptos"
           onSelection={(values) => getData(values.map((ele)=> ele.id))}
         ></SearchComponent>
-
+      
         <TableContainer component={Paper}>
           {loading ? (
             <LinearProgress style={{ backgroundColor: "gold" }} />
@@ -138,13 +139,13 @@ const Homepage = () => {
                    scope="col"
                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                  >
-                   Price
+                      Price
                  </th>
                  <th
                    scope="col"
                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                  >
-                   Change in 24 hr
+                      Change in 24 hr
                  </th>
                  
                  
@@ -167,7 +168,7 @@ const Homepage = () => {
                      </div>
                    </td>
                    <td className="px-6 py-4 whitespace-nowrap">
-                     <div className="text-sm text-gray-900">£ {stock.current_price}</div>
+                     <div className="text-sm text-gray-900">£{stock.current_price}</div>
                    </td>
                    <td className="px-6 py-4 whitespace-nowrap">
                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -209,13 +210,13 @@ const Homepage = () => {
                 breakLabel="..."
                 nextLabel="Next"
                 onPageChange={(e) => {
-                  setInitialCrypto(lastCrypto + 1);
-                  setLastCrypto(lastCrypto + 10);
+                  setPageNumber(e.selected);
+                  getData([], e.selected);
                 }}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={3}
-                pageCount={stocks.length / 10}
                 initialPage={0}
+                pageCount={135}
                 previousLabel="Previous"
                 containerClassName={"pagination justify-content-center"}
                 pageClassName={"page-item"}

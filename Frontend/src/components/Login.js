@@ -22,6 +22,7 @@ const Login = (props) => {
       props.showAlert("login successfully", "success");
       //save the auth token and redirect back to
       localStorage.setItem("token", json.authtoken);
+      localStorage.setItem("_id",json.user._id);
       navigate("/");
     } else {
       props.showAlert("invalid credentials", "danger");
@@ -33,7 +34,7 @@ const Login = (props) => {
   };
   return (
     <>
-      <div className="my-3 text-center">
+      <div className="my-2 text-center">
         <h2>Please login to use Our Services</h2>
       </div>
       <div>

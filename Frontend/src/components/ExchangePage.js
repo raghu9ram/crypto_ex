@@ -99,6 +99,7 @@ const ExchangePage = () => {
                  >
                    Country
                  </th>
+                
                  <th
                    scope="col"
                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -131,6 +132,7 @@ const ExchangePage = () => {
                    <td className="px-6 py-4 text-left whitespace-nowrap">
                      {exchange.country}
                    </td>
+                  
                    <td className="px-6 py-4 text-left">
                     {exchange.trust_score_rank}
                    </td>
