@@ -32,7 +32,7 @@ const Homepage = () => {
   const getData = (coins=[], page=0) => {
     if(localStorage.getItem('token')){
       setLoading(true)
-       axios.get( `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=5&page=${page+1}&sparkline=false&ids=${coins.join(',')}`)
+       axios.get( `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=25&page=${page+1}&sparkline=false&ids=${coins.join(',')}`)
        .then(result => {
            setStocks(result.data)
        })
@@ -49,7 +49,7 @@ const Homepage = () => {
       setLoading(true);
       axios
         .get(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=10&page=1&sparkline=false`
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=gbp&order=market_cap_desc&per_page=25&page=1&sparkline=false`
         )
         .then((result) => {
           setStocks(result.data);
@@ -80,7 +80,7 @@ const Homepage = () => {
       } else {
         fav = [...favourites, e];
       }
-      const response = await fetch("http://localhost:5000/api/auth/update", {
+      const response = await fetch("https://shares111.herokuapp.com/api/auth/update", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -139,13 +139,13 @@ const Homepage = () => {
                    scope="col"
                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                  >
-                      Price
+                   Price
                  </th>
                  <th
                    scope="col"
                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                  >
-                      Change in 24 hr
+                   Change in 24 hr
                  </th>
                  
                  
@@ -168,7 +168,7 @@ const Homepage = () => {
                      </div>
                    </td>
                    <td className="px-6 py-4 whitespace-nowrap">
-                     <div className="text-sm text-gray-900">£{stock.current_price}</div>
+                     <div className="text-sm text-gray-900">£ {stock.current_price}</div>
                    </td>
                    <td className="px-6 py-4 whitespace-nowrap">
                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">

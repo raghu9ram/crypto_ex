@@ -20,7 +20,7 @@ const Stocks = (props) => {
   const [flag,setflag] = useState(false);
 
   const getDetails = async () => {
-    axios.get( `http://localhost:5000/api/stocks/details?symbol=${symbol}`)
+    axios.get( `https://shares111.herokuapp.com/api/stocks/details?symbol=${symbol}`)
          .then(result => {
              setStocks(result.data)
          });
@@ -30,7 +30,7 @@ const Stocks = (props) => {
          getDetails();
      },[symbol])
      const fetchHistoricData = async () => {
-        const { data } = await axios.get(`http://localhost:5000/api/stocks/timeseries?symbol=${symbol}&granularity=${days}`);
+        const { data } = await axios.get(`https://shares111.herokuapp.com/api/stocks/timeseries?symbol=${symbol}&granularity=${days}`);
         setflag(true);
         if(!data[resKey]) {
           props.showAlert(data.Note,"danger");
@@ -130,7 +130,7 @@ const classes = useStyles()
     return (
       <div>
       <SearchComponent
-          url="http://localhost:5000/api/stocks/search?query="
+          url="https://expressapp111.herokuapp.com/api/stocks/search?query="
           dataString="bestMatches"
           multiple={false}
           labelKey="1. symbol"

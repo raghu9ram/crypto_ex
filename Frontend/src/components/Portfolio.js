@@ -69,7 +69,7 @@ export default function Portfolio() {
     } else {
       fav = [...favourites, e];
     }
-    const response = await fetch("http://localhost:5000/api/auth/update", {
+    const response = await fetch("https://expressapp111.herokuapp.com/api/auth/update", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

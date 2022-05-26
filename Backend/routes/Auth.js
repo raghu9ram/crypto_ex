@@ -7,6 +7,10 @@ const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 const JWT_SECRET = "Anekantisagoodb$oy";
 
+router.get("/path",async (req, res) => {
+  res.send("hello")
+})
+
 // Route:-1 Create a User using: POST "/api/auth/createuser". No login required
 router.post(
   "/createuser",

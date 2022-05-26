@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -r esm index.js",
-    "start": "node -r esm index.js"
+    "start": "node index.js",
+    "install-client": "npm install",
+        "heroku-postbuild": "npm run install-client && npm run build",
+        "server": "nodemon server.js"
+      
   },
   "author": "",
   "license": "ISC",
@@ -18,11 +21,11 @@
     "express": "^4.17.3",
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.10"
+    "mongoose": "^6.2.10",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",
-    "nodemon": "^2.0.15",
-    "request": "^2.88.2"
+    "nodemon": "^2.0.15"
   }
 }
